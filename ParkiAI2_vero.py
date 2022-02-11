@@ -54,7 +54,7 @@ CAR = pygame.image.load(os.path.join("CarAssets", "carf.png"))
 
 
 
-TRACK = pygame.image.load(os.path.join("CarAssets", "track2.png"))
+#TRACK = pygame.image.load(os.path.join("CarAssets", "track2.png"))
 
 
 air_density = 1.225

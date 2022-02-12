@@ -119,6 +119,7 @@ class Car(pygame.sprite.Sprite):
         self.NOTMOV = False
         self.FRONTMOV = False
         self.BCKMOV = False
+        self.abs_vel = 0
      
     def move(self):
         
@@ -136,6 +137,8 @@ class Car(pygame.sprite.Sprite):
         self.rect.x = math.floor(self.x)
         self.rect.y = math.floor(self.y)
         
+        self.abs_vel = (self.x_velocity**2 + self.y_velocity**2)**0.5
+       # print(self.abs_vel)
         #print(self.y, type(self.y_velocity))
     # def shift(self):
     #     self.rect.x -= 800
@@ -437,12 +440,17 @@ def eval_genomes(genomes, config): #sostituisci con main ed elimina la parte fin
         for i, car in enumerate(cars):
             #ge[i].fitness -= car.sprite.distance(park.obj_coord[0], park.obj_coord[1])/10
    
-            
+            if not car.sprite.crashed and car.sprite.abs_vel < 2 and time > 30:
+                pygame.draw.circle(SCREEN, YELLOW, (5+i*5,100), 5)
+                pygame.display.update()
+                ge[i].fitness += 100 - car.sprite.distance(park.obj_coord[0], park.obj_coord[1])
+                
             
             if car.sprite.crashed:
                 ge[i].fitness -= 500
                 ge[i].fitness += 1000 - car.sprite.distance(park.obj_coord[0], park.obj_coord[1])*2
                 print(ge[i].fitness)
+                #print(car.sprite.distance(park.obj_coord[0], park.obj_coord[1]))
                 remove(i)
                 
         
